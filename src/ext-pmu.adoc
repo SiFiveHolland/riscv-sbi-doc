@@ -587,6 +587,37 @@ The possible error codes returned in `sbiret.error` are shown in
                             <<_shared_memory_physical_address_range_parameter>>.
 |===
 
+=== Function: Get supported events (FID #8)
+
+[source, C]
+----
+struct sbiret sbi_pmu_event_supported(unsigned long counter_idx_base,
+                                      unsigned long counter_idx_mask,
+                                      unsigned long event_idx_base)
+----
+
+Returns a mask of supported events in `sbiret.value`. Each bit N indicates if
+the event with encoding `event_idx_base+N` is supported on at least one counter
+in the set represented by `counter_idx_base` and `counter_idx_mask`. If
+`counter_idx_base` is -1, then the set of counters is all possible counters.
+
+If multiple `event_data` values are defined for a given event, a set bit in
+`sbiret.value` indicates only that at least one `event_data` value is
+supported for that event.
+
+The possible error codes returned in `sbiret.error` are shown in
+<<table_pmu_event_supported_errors>> below.
+
+[#table_pmu_event_supported_errors]
+.PMU Event Supported Errors
+[cols="2,3", width=90%, align="center", options="header"]
+|===
+| Error code            | Description
+| SBI_SUCCESS           | Event information retrieved successfully.
+| SBI_ERR_INVALID_PARAM | Set of counters has at least one invalid counter or
+                          the expression `event_idx_base+(XLEN-1)` overflows.
+|===
+
 === Function Listing
 
 [#table_pmu_function_list]
@@ -602,4 +633,5 @@ The possible error codes returned in `sbiret.error` are shown in
 | sbi_pmu_counter_fw_read         | 0.3         | 5   | 0x504D55
 | sbi_pmu_counter_fw_read_hi      | 2.0         | 6   | 0x504D55
 | sbi_pmu_snapshot_set_shmem      | 2.0         | 7   | 0x504D55
+| sbi_pmu_event_supported         | 3.0         | 8   | 0x504D55
 |===
