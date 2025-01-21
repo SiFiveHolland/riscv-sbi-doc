@@ -63,7 +63,7 @@ description. Upon system reset, global and local feature values are reset.
 [cols="2,1,1,3a", width=90%, align="center", options="header"]
 |===
 | Feature Name             | Reset                  | Scope | Values
-| MISALIGNED_EXC_DELEG     | Implementation-defined | Local |
+| MISALIGNED_EXC_DELEG     | 0 if that value is supported, otherwise 1 | Local |
 [cols="1,4"]
 !===
 ! 0 ! Disable misaligned exception delegation.
